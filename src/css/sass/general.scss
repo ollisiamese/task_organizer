@@ -1,0 +1,990 @@
+/* Vars */
+$font: 15px Helvetica, Tahoma, san serif;
+$primary-font-color: #333;
+
+
+/*Mixins*/
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin transform($descr) {
+	-webkit-transform: $descr;
+		-moz-transform: $descr;
+		-ms-transform: $descr;
+			transform: $descr;      
+}
+
+@mixin box-shadow($descr) {
+	-webkit-box-shadow: $descr;
+		-moz-box-shadow: $descr;
+		box-shadow: $descr;
+}
+
+@mixin transform-origin($descr) {
+	-webkit-transform-origin: $descr;
+	-ms-transform-origin: $descr;
+	-moz-transform-origin: $descr;
+		transform-origin: $descr;
+}
+
+/* Basic classes - extended by other classes */
+.column {
+	position: relative;
+	width: 48%;
+	float: left;
+	transition: all 0.2s ease-in-out;
+	word-break: break-all;
+	min-height: 300px;
+}
+
+.dropDown {
+	@include border-radius(5px);
+	border: 1px solid #333;
+	width: 45px;
+	padding: 6px;
+	cursor: pointer;
+
+	& .arrow-right {		
+		width: 0;
+		height: 0;
+		border-top: 5px solid transparent;
+		border-bottom: 5px solid transparent;
+		border-left: 5px solid #333;
+		display: inline-block;
+	}
+	
+	&.open .arrow-right {		
+		border-top: 5px solid #333;
+		border-right: 5px solid transparent;
+		border-left: 5px solid transparent;
+		position: relative;
+		top: 3px;	
+	}
+}
+
+.dropDown-list {
+	border: 1px solid #333;
+	@include border-radius(5px);
+	position: absolute;
+	z-index: 9;
+	display: none;
+	margin-top: 1px;
+	padding: 0;
+	overflow: auto;
+	
+	&.open {
+		display: block;
+	}
+	
+	& li {
+		list-style-type: none;
+		padding: 0.5em 0.5em 1em 0.5em;
+		cursor: pointer;
+	}
+	
+	& li:hover, & .li:active {
+		background-color: #e6e6e6;
+	}	
+}
+
+
+.task {
+	
+	border: solid 1px #8c8c8c;
+	@include border-radius(3px);
+	margin-top: 15px;
+	margin-bottom: 5px;
+	margin-left: 2em;
+	width: 80%;
+	
+	& .title {
+		background-color: #404040;
+		color: #fff;
+		font-weight: 600;
+		padding: 6px;
+	}
+	
+	& .content {
+		background-color: #fff;
+		color: #1a1a1a;
+		padding: 6px;
+		min-height: 155px;
+	}
+	
+	&.selected .title{		
+		background-color:  #262626;	
+	}
+	
+	&.selected .content {		
+		background-color: #d9d9d9;
+	}
+		
+	& .content .task-body {
+		padding: 4px;
+	}
+	
+	& .menu-icons {
+		position: relative;
+		top: 5px;
+		left: 5px;
+		float: right;
+		width: 30px;
+		height: 30px;
+	}
+	
+	& .menu-icons .icon {
+		display: block;
+		width: 30px;
+		height: 30px;
+		margin-bottom: 5px;
+		cursor: pointer;	
+	}
+	
+	& .menu-icons .icon:nth-of-type(3) {
+		position:relative;
+		top:50px;
+	}
+	
+	& .time {
+		display: none;
+		position:absolute;
+		top: 123px;
+		left: -325px;
+		width: 320px;
+		min-width: 320px;		
+	}
+	
+	
+	/* By default, task is pending and showing .i-clock icon,
+	when .completed, showing .i-pending icon */
+	
+	& .i-check {
+		display: inline-block;
+	}
+	
+	& .i-pending {
+		display: none;
+	}
+	
+	&.completed .i-check {
+		display: none;
+	}
+	
+	&.completed .i-pending {
+		display: inline-block;
+	}
+	
+	
+	/* Title field */	
+	& .title .title-display {
+		display: block;	
+	}
+	
+	& .title .title-input {
+		display: none;
+		outline: none;
+	}
+	
+	& .title.edit-mode .title-display {
+		display: none;
+	}
+	
+	& .title.edit-mode .title-input {
+		display: inline-block;
+	}
+	
+	
+	/* Task body field */	
+	& .task-body {
+		position: relative;
+		float:left;
+		max-width: 85%;
+		width:85%;
+	}
+	
+	& .task-body .body-display {
+		display: block;
+		height: 120px;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	
+	& .task-body .body-input {
+		display: none;
+		width: 85%;
+		height: 100px;
+		outline: none;
+		resize: none;
+		overflow: auto;		
+	}
+	
+	& .task-body.edit-mode .body-display {
+		display: none;
+	}
+	
+	& .task-body.edit-mode .body-input {
+		display: inline-block;
+	}
+	
+	
+	/* Time field */
+	& .time-display {
+		display: none;
+	}
+	
+	& .time-title {
+		font-weight: 600;
+	}
+	
+	& .time-icons .button-blue {
+		display: inline-block;		
+		float: left;
+		margin-right: 7px;
+		padding-top: 5px;
+	}
+	
+	& .time-value {
+		margin-left: 10px;
+	}
+	
+	& .time-value input {
+		width: 40px;
+		outline: none;
+	}
+
+	&.timed .i-clock{
+		display: none;	
+	}
+	
+	&.timed .time{
+		display: none;	
+	}
+	
+	&.timed .time-display {
+		display: block;
+		cursor: pointer;
+		position:absolute;
+		top: 125px;
+		font-weight: 600;
+		left: -45px;
+	}
+	
+	&.completed .time-display {
+		cursor: auto;
+	}
+	
+	& .time-wrapper.edit-mode .time {
+		display: block;
+	}
+	
+	& .time-wrapper.edit-mode .time-display {
+		display: none;
+	}
+	
+	
+	/* Editing due time after it had already been set to a value */
+	&.t-edit.timed .time-display{
+		display: none;
+	}
+	
+	&.t-edit.timed .time {
+		display: block;
+	}
+}
+
+/************************************************/
+
+#clearDiv {
+	height:1px;
+	display:none;
+}
+
+.task-red {
+	
+	@extend .task;
+	
+	border-color:  #cc0000;
+	
+	& .title {
+		background-color: #cc0000;
+	}
+	
+	&.selected .title {
+		background-color: #990000;
+	}
+	
+	&.selected {
+		border-color: #990000;
+	}
+	
+	&.selected .content {
+		background-color: #ffe6e6;
+	}
+}
+
+
+.task-blue {
+	
+	@extend .task;
+	
+	border-color:  #00ace6;
+	
+	& .title {
+		background-color: #00ace6;
+	}
+	
+	&.selected .title {
+		background-color:  #0086b3;
+	}
+
+	&.selected {
+		border-color:  #0086b3;
+	}
+	
+	&.selected .content {
+		background-color: #e6f9ff;
+	}
+}
+
+.task-orange {
+
+	@extend .task;
+
+	border-color:  #ff751a;
+	
+	& .title {
+		background-color: #ff751a;
+	}
+	
+	&.selected .title {
+		background-color: #e65c00;
+	}
+
+	&.selected {
+		border-color: #e65c00;
+	}
+	
+	&.selected .content {
+		background-color: #fff0e6;
+	}
+}
+
+/* Completed */
+.task-green {
+
+	@extend .task;
+	
+	border-color:   #00994d;
+	
+	//	For completed task, you cannot edit the time
+	& .menu-icons .icon:nth-of-type(3) {
+		display: none;
+	}
+	
+	& .title {
+		background-color:  #00994d;
+	}
+	
+	&.selected .title {
+		background-color: #006633;
+	}
+
+	&.selected {
+		border-color: #006633;
+	}
+	
+	&.selected .content {
+		background-color: #e6fff2;
+	}
+}
+
+/* Sticky task */
+.task-yellow {
+
+	@extend .task;
+	
+	border-color:   #e6e600;
+	
+	& .title {
+		background-color:   #e6e600;
+		color: #333;
+	}
+	
+	& .content {
+		background-color: #ffffe6;
+	}
+	
+	&.selected .title {
+		background-color: #b3b300;
+	}
+	
+	&.selected {
+		border-color: #b3b300;
+	}
+	
+	&.selected .content {
+		background-color: #ffffb3;
+	}
+}
+
+/* Delete icon */
+.i-delete {
+	
+	overflow: hidden;
+	
+	&:before {
+		border-radius: 5px;
+		height: 6px;
+		margin-top: -6px;
+		@include transform(rotate(45deg));
+		content: '';
+		position: absolute;
+		width: 100%;
+		top:50%;
+		left: 0;
+		background:#3D3D3D;		
+	}
+	
+	&:after {
+		border-radius: 5px;
+		height: 6px;
+		margin-top: -6px;
+		@include transform(rotate(-45deg));
+		content: '';
+		position: absolute;
+		width: 100%;
+		top:50%;
+		left: 0;
+		background:#3D3D3D;		
+	}
+}
+
+/* Save icon */
+.i-check{
+	width:6px;
+	height:25px;
+	left: 15px;
+	background:#3D3D3D;
+	@include transform(rotate(45deg));
+	position:relative;
+	
+	&:after {
+		position:absolute;
+		content:"";
+		width:6px;
+		height:15px;
+		@include transform(rotate(-90deg));
+		@include transform-origin(0% 0%);
+		background:#3D3D3D;
+		bottom:calc(-50% - 3px);
+		left:-10px;	
+	}
+}
+
+
+/* Clock icon */
+.i-clock {
+	border-radius: 50%;
+	border: solid 4px #3D3D3D;
+	position:relative;
+	left: -1px;
+	display: block;
+	height: 22px;
+	width: 22px;
+}
+
+.i-clock-center {	
+	border: solid 2px #3D3D3D;
+	display: block;
+	height: 0;
+	width: 6px;
+	position:relative;
+	top:10px;
+	left: 8px;
+	
+	&:before {
+		content: "";
+		border: solid 2px #3D3D3D;
+		display: block;
+		height: 0;
+		width: 4px;
+		position:absolute;
+		@include transform(rotate(-90deg));
+		@include transform-origin(0% 0%);
+		left: -2px;	
+	}
+}
+
+/* Pending icon */
+.i-pending {
+	position: relative;
+	text-indent: -9999em;
+	border-top: 0.5em solid #333;
+	border-right: 0.5em solid #d7d7d7;
+	border-bottom: 0.5em solid #333;
+	border-left: 0.5em solid #333;
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	
+	&:after {		
+		border-radius: 50%;
+		width: 10px;
+		height: 10px;	
+	}
+}
+
+body {
+	font: $font;
+	color: $primary-font-color;
+	margin: 0;
+	padding: 0;
+}
+
+input, textarea {
+	font: $font;
+}
+
+textarea {
+	padding: 0;
+	margin:0;
+}
+
+h1 {
+	margin-left: 1em;
+	width: 85%;
+	background: #8c8c8c;
+	color: #fff;
+	padding-left: 5px;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+#layoutContainer {
+	overflow: hidden;
+	position:relative;
+	margin-top:60px;
+}
+
+#topArea {
+	display: block;
+	overflow: hidden;
+	margin-bottom: 1.5em;
+	z-index: 9;
+}
+
+.dropDownMenu {
+	display: inline;
+	float: left;
+	margin-right: 2em;
+	z-index: 9;
+}
+
+.column-one {
+	@extend .column;
+	left:0%;
+}
+
+.column-two {
+	@extend .column;
+	right: 0%;
+}
+
+.column-one.hide {
+	left:0%;	
+}
+
+.column-two.hide {
+	right: 0%;
+}
+
+
+.bookmark {
+	z-index: 5;
+	background: linear-gradient(180deg,#dc6f6f 5%,#b52c2c 100%);	
+}
+
+.bookmark-right {
+	@extend .bookmark;
+	display:none;
+}
+
+.bookmark-left {
+	@extend .bookmark;
+	display:none;
+}
+
+.margin-box {
+	background-color: #fff;
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+/* 'Add' dropdown menu */
+.dropDown-add {
+	
+	@extend .dropDown;
+	
+	/* Overwrite with own colors */
+	border-color: #3866a3;
+	color: #fff;
+	@include box-shadow(#bee2f9 1px 1px 0px 0px inset);
+	text-shadow: #5e5e5e 1px 1px 0px;
+	background-color:  #63b8ee;
+	background: linear-gradient(180deg, #63b8ee 5%, #468ccf 100%);	
+	
+	&:hover, &:active, &.open {
+		background-color:  #468ccf;
+		background: linear-gradient(180deg, #468ccf 5%, #63b8ee 100%);		
+	}
+	
+	& .arrow-right {
+		color: #fff;
+		border-left-color: #fff;
+	}
+	
+	&.open .arrow-right {
+		color: #fff;
+		border-top-color: #fff;
+	}
+}
+
+.dropDown-list-add {
+	
+	@extend .dropDown-list;
+	
+	border-color: #3866a3;
+	background-color: #468ccf;
+	text-shadow: #5e5e5e 1px 1px 0px;
+	color: #fff;
+	
+	& li:hover, & li:active {
+		background-color: #3866a3;
+	}
+}
+
+/* 'Sort' dropdown menu */
+.dropDown-sort {
+	
+	@extend .dropDown;
+	
+	/* Overwrite with own colors */
+	border-color: #333;
+	color: #666666;
+	@include box-shadow(#ffffff 1px 1px 0px 0px inset);
+	text-shadow: #ffffff 1px 1px 0px;
+	background-color: #f9f9f9;
+	background: linear-gradient(180deg, #f9f9f9 5%, #e9e9e9 100%);	
+	
+	&:hover, &:active, &.open {
+		background-color: #e9e9e9;
+		background: linear-gradient(180deg, #e9e9e9 5%, #f9f9f9 100%);
+	}
+	
+	& .arrow-right {
+		color: #666666;
+		border-left-color: #666666;
+	}
+	
+	&.open .arrow-right {
+		color: #666666;
+		border-top-color: #666666;
+	}
+}
+
+.dropDown-list-sort {
+	
+	@extend .dropDown-list;
+	
+	border-color: #333;
+	background-color: #f9f9f9;
+	text-shadow: #ffffff 1px 1px 0px;
+	color: #666666;
+	
+	& li:hover, & li:active {
+		background-color: #dcdcdc;
+	}
+}
+
+/* AM-PM switch for the Due time */
+.am-pm {
+	
+	@extend .dropDown-sort;
+	
+	padding: 2px;
+}
+
+.task-template {
+	display: none;
+}
+
+/* Button class, extended by all the buttons */
+.button {
+	padding: 0px 4px;
+	border-bottom: 1px solid;	
+	font-weight: normal;
+	font-size: 11px;				
+	cursor: pointer;
+	display:inline-block;
+}
+
+.button-blue {
+	
+	@extend .button;
+	
+	border-color: #3866a3;
+	color: #3866a3;
+	
+	&:hover, &:active {
+		color: #63b8ee;	
+	}
+}
+
+.button-large {	
+	
+	@include border-radius(5px);
+	
+	border: 1px solid #333;	
+	padding: 6px;
+	color: #fff;
+	width: auto;
+	cursor: pointer;
+	
+	background-color: #333;
+	
+	&:hover, &:active {
+		background-color: #1a1a1a;
+	}
+}
+
+.button-large-red {
+	
+	@extend .button-large;
+	
+	background-color: #cc0000;
+	
+	&:hover, &:active {
+		background-color: #990000;
+	}
+}
+
+
+#outerOverlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #666666;
+	opacity: 0.9;
+	z-index: 10;
+}
+
+#innerOverlay {
+	display: none;
+	position: fixed;
+	width: 20em;
+	height: 5em;
+	padding: 10px;
+	@include border-radius(5px);
+	background-color: #0d0d0d;
+	color: #fff;
+	z-index: 11;
+	bottom: 70%;
+	left: 40%;
+	
+	& .btns {
+		margin-left: 22%;
+		margin-top: 20px;
+	}
+	
+	& .button-large, & .button-large-red {	
+		position: relative; 
+		float: left;
+		margin-left: 15px;
+	}
+	
+	& span {
+		margin-left: 30%;
+	}
+}
+
+.iphone .task .time-icons .button-blue, .ipad .task .time-icons .button-blue {
+	padding-top: 8px;
+}
+
+
+/******************************************* Mobile layout ***************************/
+@media screen and (max-width: 1024px) {
+	
+	h2.completed {
+		padding-left: 1.5em;
+	}
+	
+	.column {		
+		position: fixed;		
+		width: 100%;		
+	}
+	
+	.column-one {		
+		right: 0%;
+		
+		/* Make the columns scrollable in spite of their position:fixed*/		
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+		height: 90%;
+		
+		& .task {		
+			margin-left: 0;
+		}
+		
+		.task:last-of-type {
+		
+			margin-bottom:200px;
+		}
+	}
+	
+	.iphone .column-one, .ipad .column-one {
+		
+		.task:last-of-type {
+		
+			margin-bottom:25px;
+		}	
+	}
+	
+	
+	.column-two {
+		right: 0%;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+		height: 90%;
+		overflow-x: hidden;
+		
+		& .task {	
+			margin-left: 2em;
+		}
+	}
+	
+	.column-one.hide {		
+		left: -101%;
+		& #topArea{ display: none;}
+		& #topArea .dropdown-list {z-index:9;}
+	}
+	
+	.column-two.hide {	
+		right: -101%;
+	}
+	
+	.task {		
+		margin-bottom: 2em;
+		
+		& .time {
+			margin-left: 10px;
+			left: -365px;
+			min-width:355px;
+			width: 355px;			
+		}
+		
+		& .task-body .body-display {		
+			height: 110px;			
+		}
+	}
+	
+	.iphone .task, .ipad .task {
+	
+		& .time {
+			top: 120px;			
+		}
+	}
+	
+	.iphone #clearDiv {
+		display: block;
+	}
+	
+	.bookmark {		
+		position:fixed;
+		top: 70%;
+		height: 15px;
+		word-break: normal;
+		padding: 5px 10px 20px 5px;
+		@include border-radius(5px);
+		color: #fff;
+		cursor: pointer;		
+	}
+	 
+	.bookmark-right {		
+		display:block;
+		@include transform(rotate(-90deg));
+		right: -25px;
+	}
+	
+	
+	.bookmark-left {
+		display:block;
+		@include transform(rotate(90deg));
+		left: -22px;
+	}
+	
+	.bookmark-right.hide, .bookmark-left.hide {
+		display:none;
+	}
+	
+	#innerOverlay {
+		left: 30%;
+	}
+	
+	.iphone .time {
+		width: 375px;
+		left: -390px;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	
+	.time-title {
+		display: none;
+	}
+	
+	.task {		
+		width: 90%;
+		 
+		& .time {
+			margin-left: 15px;
+			left: -230px;
+			min-width: 220px;
+			width: 220px;		
+		}
+		
+		& .time-value input {
+			width: 30px;
+		}
+		
+		.task-body, .task-body .body-input {
+			width:80%;
+		}
+		
+		& .time-icons .button-blue {
+			margin-right: 3px;
+		}
+	}
+	
+	.iphone .time {
+		width: 240px;
+		left: -265px;
+	}
+	
+	.column-one, .column-two, .margin-box{
+		height: 85%; 
+	}
+	
+	#innerOverlay {
+		left: 5%;
+	}
+	
+}

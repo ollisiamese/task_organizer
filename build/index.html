@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0 minimum-scale=1">
+	
+	<title>Task Organizer</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.min.css">
+</head>
+
+<body>
+	
+	<h1>Task Organizer</h1>
+	
+	<!-- "Bookmark" controls -->
+	<div class='bookmark-right' onclick="UI.slideColumn(1)">Completed</div>		
+	<div class='bookmark-left hide' onclick="UI.slideColumn(0)">Pending</div>
+		
+	<!-- Main content columns -->
+	<div id="layoutContainer">
+		<div class='column-one'>
+			
+			<div class="margin-box">
+				
+				<h2>Pending</h2>
+				
+				<!-- Sorting buttons -->
+				<div id="topArea">
+					
+						<div class="dropDownMenu">
+							<div class="dropDown-add" onclick="UI.toggleDropDown('add'); UI.closeDropDown('sort');">Add <span class="arrow-right"></span></div>
+							<ul class="dropDown-list-add">
+								<li onclick="TaskManager.createNewTask('1sticky');">Sticky (stays on top during sorting)</li>
+								<li onclick="TaskManager.createNewTask('2high');">High priority</li>
+								<li onclick="TaskManager.createNewTask('3med');">Medium priority</li>
+								<li onclick="TaskManager.createNewTask('4low');">Low Priority</li>
+							</ul>
+						</div>
+						
+						<div class="dropDownMenu">
+							<div class="dropDown-sort" onclick="UI.toggleDropDown('sort'); UI.closeDropDown('add');">Sort <span class="arrow-right"></span></div>
+							<ul class="dropDown-list-sort">
+								<li onclick ="TaskManager.sortByPriority()">By Priority</li>
+								<li onclick ="TaskManager.sortByDueTime()">By Time Due</li>
+								<li onclick ="TaskManager.sortByTimeCreated()">By Time Created</li>
+							</ul>
+						</div>					
+				</div>
+			
+				<div id='pendingTasks'></div>
+				<div id="clearDiv"></div>
+			</div>
+		</div>
+		
+		<div class='column-two hide'>
+			<div class="margin-box">
+				
+				<h2 class="completed">Completed</h2>			
+				
+				<div id='completedTasks'></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Overlay -->
+	<div id='outerOverlay'></div>
+	<div id='innerOverlay'>
+		<span>Delete this task?<span>
+		
+		<div class='btns'>
+			<div class='button-large-red' onclick="TaskManager.deleteTask(this)">Delete</div>
+			<div class='button-large' onclick="UI.closeOverlay()">Cancel</div>
+		</div>
+	</div>
+	
+	<!-- Task template -->
+	<div class='task-template'>
+		
+		<div class='title'>
+			<span class='title-display' onclick='UI.enterEditMode(this)'>Type in the title here...</span>
+			<input class='title-input' type='text' onkeydown='UI.checkInputEnter(this, event)' onblur='UI.leaveEditMode(this)' placeholder='Type in the title here...'/>
+		</div>
+		
+		<div class='content'>
+			
+			<div class='task-body'>
+				<span class='body-display' onclick='UI.enterEditMode(this)'>Body of the task here...</span>
+				<textarea class='body-input' onkeydown='UI.checkInputEnter(this, event)' onblur='UI.leaveEditMode(this)' placeholder='Body of the task here...'></textarea>
+			</div>
+			
+			<div class='menu-icons'>
+				<div class='icon' title='Delete' onclick="UI.openOverlay(this)"><div class='i-delete'></div></div>
+				<div class='icon' onclick="UI.changeTaskStatus(this)"><div class='i-check' title='Mark Completed'></div><div class='i-pending' title='Mark Pending'></div></div>
+				<div class='icon' title='Enter Due Time' onclick='UI.toggleTimeArea(this)'><div class='i-clock'><div class='i-clock-center'></div></div></div>
+				
+				<span class='time-wrapper'>
+					<span class='time'>
+						<span class='time-value'>
+							
+							<span class='time-title'>Time due:</span>
+							
+							<input type='number' onfocus="UI.scrollOnTimeInputFocus(this)" placeholder='00'  min='00' max='12'/>
+							:
+							<input type='number' onfocus="UI.scrollOnTimeInputFocus(this)" placeholder='00' min='00' max='59'/>
+							
+							<span class='am-pm' onclick='UI.toggleAmPm(this)'>AM</span>					
+						</span>
+						
+						<span class='time-icons'>
+							<span class='button-blue' onclick='UI.removeTimeDue(this)'>Remove</span>	
+							<span class='button-blue' onclick='UI.setDueTime(this)'>Save</span>					
+						</span>						
+					</span>
+					
+					<span class='time-display' title="Edit" onclick='UI.switchTimeDisplayToEdit(this)'>
+						<span>00</span> : <span>00</span> <span>PM</span>
+					</span>
+				</span>
+			</div>			
+		</div>		
+	</div>
+	
+<!--Enable livereload-->
+<script src="//localhost:35729/livereload.js"></script>
+</body>
+<script src="js/scripts.min.js"></script>
+</html>

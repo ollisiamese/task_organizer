@@ -16,6 +16,6 @@ Setup:
 <li>cd task_organizer</li>
 <li>Install <a href="nodejs.org">NodeJS</a></li>
 <li>Install <a href="gruntjs.com">grunt</a></li>
-<li>Install node packages: <code>npm install</li>
+<li>Install node packages: <code>npm install</code></li>
 <li>Run <code>grunt</code> -- The app will open in http://localhost:8000/</li>
 </ol>

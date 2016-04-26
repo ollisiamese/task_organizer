@@ -14,8 +14,8 @@ Setup:
 <ol>
 <li><code>git clone https://github.com/ollisiamese/task_organizer.git</code></li>
 <li>cd task_organizer</li>
-<li>Install <a href="nodejs.org">NodeJS</li>
-<li>Install <a href="gruntjs.com">grunt</li>
+<li>Install <a href="nodejs.org">NodeJS</a></li>
+<li>Install <a href="gruntjs.com">grunt</a></li>
 <li>Install node packages: <code>npm install</li>
 <li>Run <code>grunt</code> -- The app will open in http://localhost:8000/</li>
 </ol>

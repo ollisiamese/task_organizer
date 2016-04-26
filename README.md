@@ -11,9 +11,11 @@ The layout is responsive, at smaller widths each column takes up the whole scree
 Demo:  http://www.ogeinitz.com/task_organizer/
 
 Setup:
-1. <code>git clone https://github.com/ollisiamese/task_organizer.git</code>
-2. cd task_organizer
-3. Install <a href="nodejs.org">NodeJS</a>
-4. Install <a href="gruntjs.com">grunt</a>
-5. Install node packages: <code>npm install</code>
-6. Run <code>grunt</code> -- The app will open in http://localhost:8000/
+<ol>
+<li><code>git clone https://github.com/ollisiamese/task_organizer.git</code></li>
+<li>cd task_organizer</li>
+<li>Install <a href="nodejs.org">NodeJS</li>
+<li>Install <a href="gruntjs.com">grunt</li>
+<li>Install node packages: <code>npm install</li>
+<li>Run <code>grunt</code> -- The app will open in http://localhost:8000/</li>
+</ol>

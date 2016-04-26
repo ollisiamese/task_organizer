@@ -1,7 +1,7 @@
 {
-  "name": "Task Organizer",
+  "name": "TaskOrganizer",
   "description": "App to keep track of your daily tasks",
-  "license": "-",
+  "license": "MIT",
   "repository": "github.com/ollisiamese/task_organizer",
   "babel": {
     "presets": [

@@ -7,3 +7,5 @@ User can move a task between "Pending" and "Completed" columns. While a task has
 The tasks are stored in browser's local storage.
 
 The layout is responsive, at smaller widths each column takes up the whole screen and user can switch between them by pressing on the "bookmark" buttons that appear on the side. On mobile devices, user can also do this by swiping left/right.
+
+Demo:  http://www.ogeinitz.com/task_organizer/

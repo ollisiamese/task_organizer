@@ -9,3 +9,11 @@ The tasks are stored in browser's local storage.
 The layout is responsive, at smaller widths each column takes up the whole screen and user can switch between them by pressing on the "bookmark" buttons that appear on the side. On mobile devices, user can also do this by swiping left/right.
 
 Demo:  http://www.ogeinitz.com/task_organizer/
+
+Setup:
+1. <code>git clone https://github.com/ollisiamese/task_organizer.git</code>
+2. cd task_organizer
+3. Install <a href="nodejs.org">NodeJS</a>
+4. Install <a href="gruntjs.com">grunt</a>
+5. Install node packages: <code>npm install</code>
+6. Run <code>grunt</code> -- The app will open in http://localhost:8000/
